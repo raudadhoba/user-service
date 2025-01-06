@@ -3,13 +3,14 @@ package com.rd.user_service.controller;
 import com.rd.user_service.models.User;
 import com.rd.user_service.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 public class HomeController {
 
     @Autowired
@@ -23,5 +24,15 @@ public class HomeController {
         } else {
             return "fail";  // Failed login
         }
+    }
+
+
+    @GetMapping("/")
+    public ResponseEntity<?> getAllUsers(){
+        List<User> users = userService.getAllUsers();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(users);
     }
 }
